@@ -1,5 +1,21 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-gray-900 text-gray-100;
+  }
+
+  *::-webkit-scrollbar {
+    @apply w-[8px];
+  }
+
+  *::-webkit-scrollbar-track {
+    @apply rounded-[5px] bg-[#374151];
+  }
+
+  *::-webkit-scrollbar-thumb {
+    @apply rounded-[14px] bg-[#10b981];
+  }
 }
