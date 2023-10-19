@@ -4,6 +4,7 @@ import { Inter, IBM_Plex_Mono } from 'next/font/google'
 import { type ReactNode } from 'react'
 
 import { cn } from '@/lib/utils'
+import { Header } from './_components/header'
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -32,7 +33,10 @@ interface RootLayoutProps {
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="pt-BR" className={cn('antialiased', inter.variable, plexMono.variable)}>
-      <body>{children}</body>
+      <body>
+        <Header />
+        {children}
+      </body>
     </html>
   )
 }
