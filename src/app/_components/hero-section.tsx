@@ -32,7 +32,7 @@ export function HeroSection() {
             ))}
           </ul>
           <div className="mt-6 flex flex-col sm:flex-row sm:items-center sm:gap-5 lg:mt-10">
-            <Button className="w-max shadow-button">
+            <Button className="w-max shadow-button hover:scale-105">
               Entrar em contato
               <HiArrowNarrowRight size={18} />
             </Button>
