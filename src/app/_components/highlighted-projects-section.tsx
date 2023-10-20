@@ -2,6 +2,8 @@ import { HorizontalDivider, horizontalDividerStyle } from '@/components/dividers
 import { SectionTitle } from '@/components/section-title'
 import { HighlightedProjectsItem } from './highlighted-projects-item'
 import { cn } from '@/lib/utils'
+import Link from 'next/link'
+import { HiArrowNarrowRight } from 'react-icons/hi'
 
 export function HighlightedProjectsSection() {
   return (
@@ -16,6 +18,16 @@ export function HighlightedProjectsSection() {
           </li>
         ))}
       </ul>
+      <p className="flex items-center gap-1.5">
+        <span className="text-gray-400">Se interessou?</span>
+        <Link
+          href="/projects"
+          className="flex items-center gap-2 transition-colors hover:text-emerald-500"
+        >
+          Ver todos
+          <HiArrowNarrowRight aria-hidden />
+        </Link>
+      </p>
     </section>
   )
 }
