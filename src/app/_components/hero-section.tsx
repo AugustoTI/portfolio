@@ -3,11 +3,12 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { HiArrowNarrowRight } from 'react-icons/hi'
 import { TbBrandGithub, TbBrandLinkedin, TbBrandWhatsapp } from 'react-icons/tb'
+import Link from 'next/link'
 
 const mockContacts = [
-  { url: 'https://github.com/', Icon: TbBrandGithub },
-  { url: 'https://www.linkedin.com', Icon: TbBrandLinkedin },
-  { url: 'https://www.whatsapp.com', Icon: TbBrandWhatsapp },
+  { url: 'https://github.com/', Icon: TbBrandGithub, label: 'Github' },
+  { url: 'https://www.linkedin.com', Icon: TbBrandLinkedin, label: 'Linkedin' },
+  { url: 'https://www.whatsapp.com', Icon: TbBrandWhatsapp, label: 'Whatsapp' },
 ]
 
 export function HeroSection() {
@@ -32,9 +33,11 @@ export function HeroSection() {
             ))}
           </ul>
           <div className="mt-6 flex flex-col sm:flex-row sm:items-center sm:gap-5 lg:mt-10">
-            <Button className="w-max shadow-button hover:scale-105">
-              Entrar em contato
-              <HiArrowNarrowRight size={18} />
+            <Button className="w-max gap-2 shadow-button hover:scale-105" asChild>
+              <Link scroll={false} href="/#contato">
+                Entrar em contato
+                <HiArrowNarrowRight size={18} />
+              </Link>
             </Button>
 
             <ul className="flex h-20 items-center gap-3 text-2xl text-gray-600">
@@ -46,7 +49,8 @@ export function HeroSection() {
                     target="_blank"
                     rel="noreferrer"
                   >
-                    <contact.Icon />
+                    <contact.Icon aria-hidden />
+                    <span className="sr-only">{contact.label}</span>
                   </a>
                 </li>
               ))}
@@ -57,7 +61,7 @@ export function HeroSection() {
         <Image
           width={420}
           height={404}
-          src="/images/profile.jpg"
+          src="https://fakeimg.pl/420x404"
           alt="Foto de perfil do Augusto César"
           className="mb-6 h-[300px] w-[300px] rounded-lg object-cover shadow-2xl lg:mb-0 lg:h-[404px] lg:w-[420px]"
         />
