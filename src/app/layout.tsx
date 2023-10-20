@@ -5,6 +5,8 @@ import { type ReactNode } from 'react'
 
 import { cn } from '@/lib/utils'
 import { Header } from './_components/header'
+import { ContactSection } from '@/components/contact-section'
+import { Footer } from '@/components/footer'
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -36,6 +38,8 @@ export default function RootLayout({ children }: RootLayoutProps) {
       <body>
         <Header />
         {children}
+        <ContactSection />
+        <Footer />
       </body>
     </html>
   )

@@ -34,7 +34,7 @@ export function HeroSection() {
           </ul>
           <div className="mt-6 flex flex-col sm:flex-row sm:items-center sm:gap-5 lg:mt-10">
             <Button className="w-max gap-2 shadow-button hover:scale-105" asChild>
-              <Link scroll={false} href="/#contato">
+              <Link href="/#contato">
                 Entrar em contato
                 <HiArrowNarrowRight size={18} />
               </Link>
