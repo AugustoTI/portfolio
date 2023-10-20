@@ -35,7 +35,7 @@ export function HighlightedProjectsItem() {
         </ul>
         <Button asChild variant="ghost" className="w-max gap-2 text-sm">
           <Link href={'/projects'}>
-            Teste <HiArrowNarrowRight aria-hidden />
+            Veja mais <HiArrowNarrowRight aria-hidden />
           </Link>
         </Button>
       </div>
