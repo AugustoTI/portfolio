@@ -1,15 +1,19 @@
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import { type HighlightProject } from '@/lib/sanity/queries/home'
+import { urlFor } from '@/lib/utils'
 import Image from 'next/image'
 import Link from 'next/link'
 import { HiArrowNarrowRight } from 'react-icons/hi'
 
-export function HighlightedProjectsItem() {
+type HighlightedProjectsItemProps = HighlightProject
+
+export function HighlightedProjectsItem(props: HighlightedProjectsItemProps) {
   return (
-    <div className="flex flex-col gap-6 lg:flex-row lg:gap-12">
-      <div className="h-full w-full">
+    <div className="grid grid-cols-1 gap-6 lg:grid-cols-[450px,1fr] lg:gap-12">
+      <div>
         <Image
-          src={'https://fakeimg.pl/420x304'}
+          src={urlFor(props.thumbnail).width(420).height(304).url()}
           width={420}
           height={304}
           alt="Thumbnail do projeto"
@@ -18,23 +22,17 @@ export function HighlightedProjectsItem() {
       </div>
 
       <div>
-        <h3 className="text-lg font-medium text-gray-50">Title of project</h3>
-        <p className="my-6 text-gray-400">
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Illum dolorem sunt
-          officia. Velit adipisci ullam ducimus, provident sequi officia. Doloremque
-          maxime quaerat quidem iure sunt natus similique odit atque harum.
-        </p>
+        <h3 className="text-lg font-medium text-gray-50">{props.name}</h3>
+        <p className="my-6 text-gray-400">{props.short_description}</p>
         <ul className="mb-8 flex flex-wrap gap-2 gap-y-3 lg:max-w-[350px]">
-          {Array.from({ length: 6 }).map((_, index) => (
-            <li key={index}>
-              <Badge asChild className="font-normal">
-                <strong>NextJS</strong>
-              </Badge>
-            </li>
+          {props.technologies.map((technology) => (
+            <Badge key={technology._id} asChild className="font-normal">
+              <li>{technology.name}</li>
+            </Badge>
           ))}
         </ul>
         <Button asChild variant="ghost" className="w-max gap-2 text-sm">
-          <Link href={'/projects'}>
+          <Link href={`/projects/${props.slug.current}`}>
             Veja mais <HiArrowNarrowRight aria-hidden />
           </Link>
         </Button>

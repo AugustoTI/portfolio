@@ -1,24 +1,28 @@
 import { SectionTitle } from '@/components/section-title'
 import { WorkExperienceItem } from './work-experience-item'
+import { type WorkExperience } from '@/lib/sanity/queries/home'
 
-export function WorkExperience() {
+interface WorkExperienceProps {
+  data: WorkExperience[]
+}
+
+export function WorkExperience({ data }: WorkExperienceProps) {
   return (
     <section className="container flex flex-col gap-10 px-4 py-16 sm:gap-4 md:flex-row lg:gap-16">
       <div className="max-w-[420px]">
         <SectionTitle title="Experiência Profissional" subtitle="Experiências" />
         <p className="mt-6 text-gray-400">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora minima nam rem
-          nesciunt ad, a recusandae ducimus hic.
+          Estou sempre aberto a novos desafios e projetos emocionantes. Vamos trabalhar
+          juntos para criar soluções incríveis para sua empresa!
         </p>
       </div>
 
       <ul className="flex flex-col gap-4">
-        <li>
-          <WorkExperienceItem />
-        </li>
-        <li>
-          <WorkExperienceItem />
-        </li>
+        {data.map((workExperience) => (
+          <li key={workExperience._id}>
+            <WorkExperienceItem {...workExperience} />
+          </li>
+        ))}
       </ul>
     </section>
   )

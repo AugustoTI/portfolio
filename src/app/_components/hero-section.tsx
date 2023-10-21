@@ -2,34 +2,41 @@ import Image from 'next/image'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { HiArrowNarrowRight } from 'react-icons/hi'
-import { TbBrandGithub, TbBrandLinkedin, TbBrandWhatsapp } from 'react-icons/tb'
+import { PortableText, type PortableTextReactComponents } from '@portabletext/react'
 import Link from 'next/link'
+import { type DataHomePageProps } from '@/lib/sanity/queries/home'
+import { urlFor } from '@/lib/utils'
 
-const mockContacts = [
-  { url: 'https://github.com/', Icon: TbBrandGithub, label: 'Github' },
-  { url: 'https://www.linkedin.com', Icon: TbBrandLinkedin, label: 'Linkedin' },
-  { url: 'https://www.whatsapp.com', Icon: TbBrandWhatsapp, label: 'Whatsapp' },
-]
+interface HeroSectionProps {
+  data: DataHomePageProps
+}
 
-export function HeroSection() {
+const myPortableTextComponents: Partial<PortableTextReactComponents> = {
+  block: {
+    normal({ children }) {
+      return <p className="my-6 text-sm text-gray-400 sm:text-base">{children}</p>
+    },
+  },
+  marks: {
+    strong({ children }) {
+      return <strong className="font-medium text-gray-50">{children}</strong>
+    },
+  },
+}
+
+export function HeroSection({ data }: HeroSectionProps) {
   return (
     <section className="flex w-full flex-col justify-end bg-hero-image bg-cover bg-center bg-no-repeat pb-10 pt-32 sm:pb-32 lg:h-[755px] lg:pb-[110px]">
       <div className="container flex flex-col-reverse items-start justify-between px-4 lg:flex-row">
         <div className="w-full lg:max-w-[530px]">
           <p className="font-mono text-emerald-400">Olá, meu nome é</p>
           <h1 className="mt-2 text-4xl font-medium">Augusto César</h1>
-          <p className="my-6 text-sm text-gray-400 sm:text-base">
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Possimus tempora
-            reprehenderit veniam eligendi quasi fugiat sit quae cumque, nemo quidem, sequi
-            magni id enim pariatur! Tempore saepe cum neque asperiores.
-          </p>
+          <PortableText value={data.introduction} components={myPortableTextComponents} />
           <ul className="flex flex-wrap gap-x-2 gap-y-3 lg:max-w-[340px]">
-            {Array.from({ length: 6 }).map((_, index) => (
-              <li key={index}>
-                <Badge asChild className="font-normal">
-                  <strong>NextJS</strong>
-                </Badge>
-              </li>
+            {data.intro_technologies.map((technology) => (
+              <Badge key={technology._id} asChild>
+                <li>{technology.name}</li>
+              </Badge>
             ))}
           </ul>
           <div className="mt-6 flex flex-col sm:flex-row sm:items-center sm:gap-5 lg:mt-10">
@@ -41,16 +48,19 @@ export function HeroSection() {
             </Button>
 
             <ul className="flex h-20 items-center gap-3 text-2xl text-gray-600">
-              {mockContacts.map((contact) => (
-                <li key={contact.url}>
+              {data.social_medias.map((social_media) => (
+                <li key={social_media._id}>
                   <a
                     className="transition-colors hover:text-gray-100"
-                    href={contact.url}
+                    href={social_media.url}
                     target="_blank"
                     rel="noreferrer"
                   >
-                    <contact.Icon aria-hidden />
-                    <span className="sr-only">{contact.label}</span>
+                    <i
+                      dangerouslySetInnerHTML={{ __html: social_media.icon_svg }}
+                      aria-hidden
+                    />
+                    <span className="sr-only">{social_media.name}</span>
                   </a>
                 </li>
               ))}
@@ -62,9 +72,10 @@ export function HeroSection() {
           width={420}
           height={404}
           priority
-          src="https://fakeimg.pl/420x404"
+          src={urlFor(data.profile_picture).width(420).height(404).url()}
           alt="Foto de perfil do Augusto César"
           className="mb-6 h-[300px] w-[300px] rounded-lg object-cover shadow-2xl lg:mb-0 lg:h-[404px] lg:w-[420px]"
+          quality={85}
         />
       </div>
     </section>

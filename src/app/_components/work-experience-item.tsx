@@ -1,13 +1,60 @@
 import { Badge } from '@/components/ui/badge'
 import Image from 'next/image'
+import { type WorkExperience } from '@/lib/sanity/queries/home'
+import { urlFor } from '@/lib/utils'
+import { PortableText, type PortableTextReactComponents } from '@portabletext/react'
+import { format } from 'date-fns'
+import { ptBR } from 'date-fns/locale'
 
-export function WorkExperienceItem() {
+type WorkExperienceItemProps = WorkExperience
+
+const myPortableTextComponents: Partial<PortableTextReactComponents> = {
+  block: {
+    normal({ children }) {
+      return <p className="mb-3 text-sm sm:text-base">{children}</p>
+    },
+  },
+  marks: {
+    strong({ children }) {
+      return <strong className="font-medium text-gray-50">{children}</strong>
+    },
+    link: ({ value, children }) => {
+      const target = (value?.href || '').startsWith('http') ? '_blank' : undefined
+      return (
+        <a
+          href={value?.href}
+          target={target}
+          rel={target === '_blank' ? 'noreferrer' : undefined}
+          className="underline transition-colors hover:text-emerald-500"
+        >
+          {children}
+        </a>
+      )
+    },
+  },
+  list: {
+    bullet({ children }) {
+      return (
+        <ul className="flex list-inside list-disc flex-col gap-1 pl-2">{children}</ul>
+      )
+    },
+  },
+}
+
+export function WorkExperienceItem(props: WorkExperienceItemProps) {
+  const startDate = new Date(props.start_date)
+
+  const formattedStartDate = format(startDate, 'MMM yyyy', { locale: ptBR })
+  const formattedEndDate = props.end_date
+    ? format(new Date(props.end_date), 'MMM yyyy', { locale: ptBR })
+    : 'atualmente'
+
   return (
     <div className="grid grid-cols-[40px,1fr] gap-4 md:gap-10">
       <div className="flex flex-col items-center gap-4">
         <div className="rounded-full border border-gray-500 p-0.5">
           <Image
-            src={'https://fakeimg.pl/40x40'}
+            src={urlFor(props.company_logo).width(40).height(40).url()}
             width={40}
             height={40}
             alt="Logo da empresa"
@@ -20,28 +67,29 @@ export function WorkExperienceItem() {
       <div>
         <div className="flex flex-col items-start gap-2 text-sm sm:text-base">
           <a
-            href="https://www.linkedin.com/company/descoinvest/"
+            href={props.company_url}
             target="_blank"
             rel="noreferrer"
             className="text-gray-500 transition hover:text-emerald-500"
           >
-            @ Descoinvest
+            @{props.company_name}
           </a>
-          <h3 className="text-gray-300">Desenvolvedor FullStack</h3>
-          <span className="text-gray-500">Setembro 2023 - Atualmente - (1 Mês)</span>
-          <p>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Est voluptate
-            consequatur fugit quae numquam commodi incidunt ipsa recusandae doloremque
-            atque.
-          </p>
+          <h3 className="text-gray-300">{props.role}</h3>
+          <span className="text-gray-500">
+            {formattedStartDate} • {formattedEndDate}
+          </span>
+          <div className="text-gray-400">
+            <PortableText
+              value={props.introduction}
+              components={myPortableTextComponents}
+            />
+          </div>
           <h4 className="mb-3 mt-6 text-sm font-semibold text-gray-400">Competências</h4>
           <ul className="mb-8 flex flex-wrap gap-x-2 gap-y-3 lg:max-w-[350px]">
-            {Array.from({ length: 6 }).map((_, index) => (
-              <li key={index}>
-                <Badge asChild className="font-normal">
-                  <strong>React</strong>
-                </Badge>
-              </li>
+            {props.technologies.map((technology) => (
+              <Badge key={technology._id} asChild>
+                <li>{technology.name}</li>
+              </Badge>
             ))}
           </ul>
         </div>

@@ -4,7 +4,8 @@ const isDev = process.env.NODE_ENV !== 'production'
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['fakeimg.pl'],
+    domains: ['fakeimg.pl', 'cdn.sanity.io'],
+    dangerouslyAllowSVG: true,
   },
   compiler: {
     removeConsole: !isDev,
