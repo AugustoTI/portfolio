@@ -7,6 +7,7 @@ import { cn } from '@/lib/utils'
 import { Header } from './_components/header'
 import { ContactSection } from '@/components/contact-section'
 import { Footer } from '@/components/footer'
+import { BackToTop } from './_components/back-to-top'
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -36,6 +37,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="pt-BR" className={cn('antialiased', inter.variable, plexMono.variable)}>
       <body>
+        <BackToTop />
         <Header />
         {children}
         <ContactSection />
