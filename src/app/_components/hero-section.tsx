@@ -61,6 +61,7 @@ export function HeroSection() {
         <Image
           width={420}
           height={404}
+          priority
           src="https://fakeimg.pl/420x404"
           alt="Foto de perfil do Augusto César"
           className="mb-6 h-[300px] w-[300px] rounded-lg object-cover shadow-2xl lg:mb-0 lg:h-[404px] lg:w-[420px]"
