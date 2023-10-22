@@ -19,6 +19,9 @@ module.exports = {
       boxShadow: {
         button: '0px 0px 68px 7px rgba(5, 150, 105, 0.4)',
       },
+      dropShadow: {
+        button: '0px 0px 68px rgba(5, 150, 105, 0.4)',
+      },
     },
   },
   plugins: [],
