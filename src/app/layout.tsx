@@ -11,8 +11,12 @@ import { Footer } from '@/components/footer'
 import { BackToTop } from './_components/back-to-top'
 
 export const metadata: Metadata = {
-  title: 'Create Next App',
-  description: 'This site was created using the NextJS framework 🚀',
+  title: {
+    default: 'Augusto César',
+    template: '%s | Augusto César',
+  },
+  description:
+    'Site portfolio construido pelo desenvolvedor Augusto César 🚀. Geração do site feita utilizando NextJS ✨',
 }
 
 const inter = Inter({
