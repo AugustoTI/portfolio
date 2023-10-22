@@ -1,3 +1,5 @@
+'use client'
+
 import { Badge } from '@/components/ui/badge'
 import Image from 'next/image'
 import { type WorkExperience } from '@/lib/sanity/queries/home'
@@ -5,6 +7,8 @@ import { urlFor } from '@/lib/utils'
 import { PortableText, type PortableTextReactComponents } from '@portabletext/react'
 import { format } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
+import { motion } from 'framer-motion'
+import { badgeAnimation, fadeUpAnimation } from '@/lib/animations'
 
 type WorkExperienceItemProps = WorkExperience
 
@@ -50,7 +54,11 @@ export function WorkExperienceItem(props: WorkExperienceItemProps) {
     : 'atualmente'
 
   return (
-    <div className="grid grid-cols-[40px,1fr] gap-4 md:gap-10">
+    <motion.div
+      className="grid grid-cols-[40px,1fr] gap-4 md:gap-10"
+      {...fadeUpAnimation}
+      transition={{ duration: 0.5 }}
+    >
       <div className="flex flex-col items-center gap-4">
         <div className="rounded-full border border-gray-500 p-0.5">
           <Image
@@ -86,14 +94,19 @@ export function WorkExperienceItem(props: WorkExperienceItemProps) {
           </div>
           <h4 className="mb-3 mt-6 text-sm font-semibold text-gray-400">Competências</h4>
           <ul className="mb-8 flex flex-wrap gap-x-2 gap-y-3 lg:max-w-[350px]">
-            {props.technologies.map((technology) => (
+            {props.technologies.map((technology, index) => (
               <Badge key={technology._id} asChild>
-                <li>{technology.name}</li>
+                <motion.li
+                  {...badgeAnimation}
+                  transition={{ duration: 0.2, delay: index * 0.1 }}
+                >
+                  {technology.name}
+                </motion.li>
               </Badge>
             ))}
           </ul>
         </div>
       </div>
-    </div>
+    </motion.div>
   )
 }

@@ -1,6 +1,9 @@
+'use client'
+
 import { SectionTitle } from '@/components/section-title'
 import Link from 'next/link'
 import { HiArrowNarrowLeft } from 'react-icons/hi'
+import { motion } from 'framer-motion'
 
 export default function ProjectsIntroduction() {
   return (
@@ -10,7 +13,12 @@ export default function ProjectsIntroduction() {
         subtitle="projetos"
         className="items-center text-center [&>h2]:text-4xl"
       />
-      <div className="text-center">
+      <motion.div
+        initial={{ opacity: 0, y: 100 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="text-center"
+      >
         <p className="my-6 max-w-[640px] text-sm text-gray-400 sm:text-base">
           Aqui você poderá ver alguns dos meus trabalhos. Navegue à vontade e explore os
           projetos para ver como foram criados, as tecnologias utilizadas e as
@@ -23,7 +31,7 @@ export default function ProjectsIntroduction() {
           <HiArrowNarrowLeft size={20} />
           Voltar para home
         </Link>
-      </div>
+      </motion.div>
     </section>
   )
 }

@@ -8,6 +8,8 @@ import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import axios from 'axios'
 import { toast } from 'sonner'
+import { motion } from 'framer-motion'
+import { fadeUpAnimation } from '@/lib/animations'
 
 const formSchema = z.object({
   name: z.string().min(3).max(100),
@@ -56,7 +58,9 @@ export function ContactSection() {
           className="items-center text-center"
         />
 
-        <form
+        <motion.form
+          {...fadeUpAnimation}
+          transition={{ duration: 0.5 }}
           onSubmit={handleSubmit(onSubmit)}
           className="mt-12 flex w-full flex-col gap-4"
           autoComplete="off"
@@ -102,7 +106,7 @@ export function ContactSection() {
           >
             Enviar Mensagem <HiArrowNarrowRight size={18} aria-hidden />
           </Button>
-        </form>
+        </motion.form>
       </div>
     </section>
   )

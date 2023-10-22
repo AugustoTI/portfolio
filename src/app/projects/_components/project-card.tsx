@@ -1,12 +1,19 @@
+'use client'
+
 import { HighlightProject as PartialProjectData } from '@/lib/sanity/queries/home'
 import { urlFor } from '@/lib/utils'
 import Image from 'next/image'
+import { motion } from 'framer-motion'
+import { fadeUpAnimation } from '@/lib/animations'
 
 export function ProjectCard(props: PartialProjectData) {
   const technologies = props.technologies.map((technology) => technology.name).join(', ')
 
   return (
-    <div className="group flex h-[436px] flex-col overflow-hidden rounded-lg border-2 border-transparent bg-gray-800 opacity-70 transition hover:border-emerald-500 hover:opacity-100">
+    <motion.div
+      {...fadeUpAnimation}
+      className="group flex h-[436px] flex-col overflow-hidden rounded-lg border-2 border-transparent bg-gray-800 opacity-70 transition hover:border-emerald-500 hover:opacity-100"
+    >
       <div className=" h-48 w-full overflow-hidden">
         <Image
           src={urlFor(props.thumbnail).width(380).height(200).url()}
@@ -26,6 +33,6 @@ export function ProjectCard(props: PartialProjectData) {
           {technologies}
         </span>
       </div>
-    </div>
+    </motion.div>
   )
 }

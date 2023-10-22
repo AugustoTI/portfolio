@@ -1,3 +1,5 @@
+'use client'
+
 import { SectionTitle } from '@/components/section-title'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -8,6 +10,8 @@ import { HiArrowNarrowLeft } from 'react-icons/hi'
 import { type Project } from '@/lib/sanity/queries/home'
 import { urlFor } from '@/lib/utils'
 import { PortableText, PortableTextReactComponents } from '@portabletext/react'
+import { motion } from 'framer-motion'
+import { badgeAnimation, fadeUpAnimation } from '@/lib/animations'
 
 interface ProjectDetailsProps {
   data: Project
@@ -53,7 +57,7 @@ const myPortableTextComponents: Partial<PortableTextReactComponents> = {
 export function ProjectDetails({ data }: ProjectDetailsProps) {
   return (
     <section className="relative flex w-full flex-col items-center justify-end overflow-hidden px-4 pb-10 pt-24 sm:min-h-[750px] sm:pb-24">
-      <div
+      <motion.div
         className="absolute inset-0 -z-10"
         style={{
           background: `url(/images/hero-bg.png) no-repeat center/cover, url(${urlFor(
@@ -63,21 +67,34 @@ export function ProjectDetails({ data }: ProjectDetailsProps) {
             .height(500)
             .url()}) no-repeat center/cover`,
         }}
+        initial={{ opacity: 0, scale: 1.3 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.5 }}
       />
       <SectionTitle
         title={data.name}
         subtitle="Projetos"
         className="items-center text-center [&>h2]:text-4xl"
       />
-      <PortableText value={data.description} components={myPortableTextComponents} />
+      <motion.div {...fadeUpAnimation}>
+        <PortableText value={data.description} components={myPortableTextComponents} />
+      </motion.div>
       <ul className="flex w-full max-w-[330px] flex-wrap items-center justify-center gap-2">
-        {data.technologies.map((technology) => (
+        {data.technologies.map((technology, index) => (
           <Badge key={technology._id} asChild>
-            <li>{technology.name}</li>
+            <motion.li
+              {...badgeAnimation}
+              transition={{ duration: 0.3, delay: index * 0.1 }}
+            >
+              {technology.name}
+            </motion.li>
           </Badge>
         ))}
       </ul>
-      <div className="my-6 flex flex-col items-center gap-2 sm:my-12 sm:flex-row sm:gap-4">
+      <motion.div
+        {...fadeUpAnimation}
+        className="my-6 flex flex-col items-center gap-2 sm:my-12 sm:flex-row sm:gap-4"
+      >
         <Button asChild className="min-w-[180px] gap-2 shadow-button hover:scale-105">
           <a href={data.github_url} target="_blank" rel="noreferrer">
             <TbBrandGithub size={20} />
@@ -90,7 +107,7 @@ export function ProjectDetails({ data }: ProjectDetailsProps) {
             Projeto online
           </a>
         </Button>
-      </div>
+      </motion.div>
       <Link
         href={'/projects'}
         className="inline-flex items-center justify-center gap-2 transition-colors hover:text-emerald-500"
