@@ -12,9 +12,9 @@ export default function ProjectsIntroduction() {
       />
       <div className="text-center">
         <p className="my-6 max-w-[640px] text-sm text-gray-400 sm:text-base">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas voluptatum
-          laboriosam, explicabo ullam, adipisci vel sapiente corporis veniam corrupti,
-          asperiores deleniti voluptatibus molestiae minima.
+          Aqui você poderá ver alguns dos meus trabalhos. Navegue à vontade e explore os
+          projetos para ver como foram criados, as tecnologias utilizadas e as
+          funcionalidades implementadas.
         </p>
         <Link
           href={'/'}

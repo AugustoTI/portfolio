@@ -1,11 +1,12 @@
 import Image from 'next/image'
+import { type ProjectPreview as ProjectPreviewData } from '@/lib/sanity/queries/home'
+import { urlFor } from '@/lib/utils'
 
-const previews = [
-  { title: 'Home', imageUrl: 'https://fakeimg.pl/1080x672/333333/c2c2c2' },
-  { title: 'Login', imageUrl: 'https://fakeimg.pl/1080x672/333333/c2c2c2' },
-]
+interface ProjectPreviewProps {
+  previews: ProjectPreviewData[]
+}
 
-export function ProjectPreview() {
+export function ProjectPreview({ previews }: ProjectPreviewProps) {
   return (
     <section className="container my-12  px-4 md:my-32 ">
       <ul className="flex flex-col gap-8 md:gap-32">
@@ -15,12 +16,12 @@ export function ProjectPreview() {
               {preview.title}
             </h3>
             <Image
-              src={preview.imageUrl}
+              src={urlFor(preview.image_preview).width(1080).height(672).url()}
               width={1080}
               height={672}
               alt={`Preview da seção ${preview.title}`}
               className="aspect-auto w-full rounded-lg object-cover"
-              unoptimized
+              quality={85}
             />
           </li>
         ))}

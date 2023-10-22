@@ -10,14 +10,28 @@ export interface SocialMedia {
   icon_svg: string | TrustedHTML
 }
 
-export interface HighlightProject {
+export interface ProjectPreview {
+  title: string
+  image_preview: SanityImageSource
+}
+
+export interface Project {
   _id: string
   slug: { current: string }
   name: string
   thumbnail: SanityImageSource
   technologies: Technology[]
   short_description: string
+  github_url: string
+  live_project_url: string
+  sections_preview: ProjectPreview[]
+  description: PortableTextProps['value']
 }
+
+export type HighlightProject = Omit<
+  Project,
+  'github_url' | 'live_project_url' | 'sections_preview'
+>
 
 export interface WorkExperience {
   _id: string
@@ -44,7 +58,8 @@ export interface DataHomePageProps {
 }
 
 export async function getDataHomePage(): Promise<DataHomePageProps> {
-  return sanityClient.fetch(groq`
+  return sanityClient.fetch(
+    groq`
   *[_type=='page' && slug.current=='home']{
     introduction,
     profile_picture,
@@ -87,5 +102,12 @@ export async function getDataHomePage(): Promise<DataHomePageProps> {
       introduction
     }
   }[0]
-  `)
+  `,
+    {},
+    {
+      next: {
+        revalidate: 60 * 60 * 24,
+      },
+    },
+  )
 }
