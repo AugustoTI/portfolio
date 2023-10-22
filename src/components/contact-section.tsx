@@ -6,6 +6,8 @@ import { SectionTitle } from '@/components/section-title'
 import { Button } from '@/components/ui/button'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
+import axios from 'axios'
+import { toast } from 'sonner'
 
 const formSchema = z.object({
   name: z.string().min(3).max(100),
@@ -19,6 +21,7 @@ export function ContactSection() {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { isValid, isSubmitting },
   } = useForm<ContactFields>({
     resolver: zodResolver(formSchema),
@@ -32,8 +35,13 @@ export function ContactSection() {
   })
 
   const onSubmit: SubmitHandler<ContactFields> = async (formData) => {
-    console.log(formData)
-    // TODO: Discord Integration
+    try {
+      const { data } = await axios.post('/api/contact', formData)
+      reset()
+      toast.success(data.message)
+    } catch {
+      toast.success('Ocorreu um erro ao enviar a mensagem. Tente novamente mais tarde')
+    }
   }
 
   return (

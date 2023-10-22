@@ -2,6 +2,7 @@ import '@/styles/global.css'
 import { type Metadata } from 'next'
 import { Inter, IBM_Plex_Mono } from 'next/font/google'
 import { type ReactNode } from 'react'
+import { Toaster } from 'sonner'
 
 import { cn } from '@/lib/utils'
 import { Header } from './_components/header'
@@ -37,6 +38,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="pt-BR" className={cn('antialiased', inter.variable, plexMono.variable)}>
       <body>
+        <Toaster richColors />
         <BackToTop />
         <Header />
         {children}
