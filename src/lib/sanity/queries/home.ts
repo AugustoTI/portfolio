@@ -106,7 +106,7 @@ export async function getDataHomePage(): Promise<DataHomePageProps> {
     {},
     {
       next: {
-        revalidate: 60 * 60 * 24,
+        revalidate: 60 * 60 * 12,
       },
     },
   )

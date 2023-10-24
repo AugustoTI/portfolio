@@ -17,7 +17,7 @@ export async function getDataProjectsPage(): Promise<PartialProjectData[]> {
     {},
     {
       next: {
-        revalidate: 60 * 60 * 24,
+        revalidate: 60 * 60 * 12,
       },
     },
   )
@@ -44,7 +44,7 @@ export async function getDataProjectPage(slug: string): Promise<Project> {
     },
     {
       next: {
-        revalidate: 60 * 60 * 24,
+        revalidate: 60 * 60 * 12,
       },
     },
   )
