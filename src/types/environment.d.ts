@@ -1,8 +1,7 @@
 // Set the typing of your environment variables here 👇
 type MyVariables = {
-  NEXT_PUBLIC_SANITY_PROJECT_ID: string
-  NEXT_PUBLIC_SANITY_DATASET: string
-  NEXT_PUBLIC_SANITY_API_VERSION: string | undefined
+  HYGRAPH_URL: string
+  HYGRAPH_TOKEN: string
   WEBHOOK_URL: string
 }
 

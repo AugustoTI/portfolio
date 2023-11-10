@@ -2,7 +2,7 @@
 
 import { KnownSectionItem } from './known-section-item'
 import { SectionTitle } from '@/components/section-title'
-import { type Technology } from '@/lib/sanity/queries/home'
+import { IconData as Technology } from '@/types/hygraph/icon'
 import { motion } from 'framer-motion'
 
 interface KnownSectionProps {
@@ -19,7 +19,7 @@ export function KnownSection({ data }: KnownSectionProps) {
             initial={{ opacity: 0, scale: 0 }}
             whileInView={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5 }}
-            key={item._id}
+            key={item.id}
           >
             <KnownSectionItem tech={{ icon: item.icon_svg, name: item.name }} />
           </motion.li>

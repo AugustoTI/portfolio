@@ -4,7 +4,7 @@ import { HighlightedProjectsItem } from './highlighted-projects-item'
 import { cn } from '@/lib/utils'
 import Link from 'next/link'
 import { HiArrowNarrowRight } from 'react-icons/hi'
-import { type HighlightProject } from '@/lib/sanity/queries/home'
+import { HighlightProject } from '@/types/hygraph/page-info'
 
 interface HighlightedProjectsSectionProps {
   data: HighlightProject[]
@@ -18,7 +18,7 @@ export function HighlightedProjectsSection({ data }: HighlightedProjectsSectionP
 
       <ul>
         {data.map((project) => (
-          <li key={project._id} className={cn(horizontalDividerStyle, 'pb-8')}>
+          <li key={project.id} className={cn(horizontalDividerStyle, 'pb-8')}>
             <HighlightedProjectsItem {...project} />
           </li>
         ))}

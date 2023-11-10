@@ -2,48 +2,14 @@
 
 import { Badge } from '@/components/ui/badge'
 import Image from 'next/image'
-import { type WorkExperience } from '@/lib/sanity/queries/home'
-import { urlFor } from '@/lib/utils'
-import { PortableText, type PortableTextReactComponents } from '@portabletext/react'
 import { format } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 import { motion } from 'framer-motion'
 import { badgeAnimation, fadeUpAnimation } from '@/lib/animations'
+import { WorkExperience } from '@/types/hygraph/page-info'
+import { RichText } from '@/components/rich-text'
 
 type WorkExperienceItemProps = WorkExperience
-
-const myPortableTextComponents: Partial<PortableTextReactComponents> = {
-  block: {
-    normal({ children }) {
-      return <p className="mb-3 text-sm sm:text-base">{children}</p>
-    },
-  },
-  marks: {
-    strong({ children }) {
-      return <strong className="font-medium text-gray-50">{children}</strong>
-    },
-    link: ({ value, children }) => {
-      const target = (value?.href || '').startsWith('http') ? '_blank' : undefined
-      return (
-        <a
-          href={value?.href}
-          target={target}
-          rel={target === '_blank' ? 'noreferrer' : undefined}
-          className="underline transition-colors hover:text-emerald-500"
-        >
-          {children}
-        </a>
-      )
-    },
-  },
-  list: {
-    bullet({ children }) {
-      return (
-        <ul className="flex list-inside list-disc flex-col gap-1 pl-2">{children}</ul>
-      )
-    },
-  },
-}
 
 export function WorkExperienceItem(props: WorkExperienceItemProps) {
   const startDate = new Date(props.start_date)
@@ -62,7 +28,7 @@ export function WorkExperienceItem(props: WorkExperienceItemProps) {
       <div className="flex flex-col items-center gap-4">
         <div className="rounded-full border border-gray-500 p-0.5">
           <Image
-            src={urlFor(props.company_logo).width(40).height(40).url()}
+            src={props.company_logo.url}
             width={40}
             height={40}
             alt="Logo da empresa"
@@ -87,15 +53,12 @@ export function WorkExperienceItem(props: WorkExperienceItemProps) {
             {formattedStartDate} • {formattedEndDate}
           </span>
           <div className="text-gray-400">
-            <PortableText
-              value={props.introduction}
-              components={myPortableTextComponents}
-            />
+            <RichText content={props.description.raw} />
           </div>
           <h4 className="mb-3 mt-6 text-sm font-semibold text-gray-400">Competências</h4>
           <ul className="mb-8 flex flex-wrap gap-x-2 gap-y-3 lg:max-w-[350px]">
             {props.technologies.map((technology, index) => (
-              <Badge key={technology._id} asChild>
+              <Badge key={technology.id} asChild>
                 <motion.li
                   {...badgeAnimation}
                   transition={{ duration: 0.2, delay: index * 0.1 }}

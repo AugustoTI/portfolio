@@ -1,6 +1,6 @@
 import { SectionTitle } from '@/components/section-title'
 import { WorkExperienceItem } from './work-experience-item'
-import { type WorkExperience } from '@/lib/sanity/queries/home'
+import { type WorkExperience } from '@/types/hygraph/page-info'
 
 interface WorkExperienceProps {
   data: WorkExperience[]
@@ -19,7 +19,7 @@ export function WorkExperience({ data }: WorkExperienceProps) {
 
       <ul className="flex flex-col gap-4">
         {data.map((workExperience) => (
-          <li key={workExperience._id}>
+          <li key={workExperience.id}>
             <WorkExperienceItem {...workExperience} />
           </li>
         ))}

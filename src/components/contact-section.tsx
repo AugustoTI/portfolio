@@ -4,20 +4,12 @@ import { HiArrowNarrowRight } from 'react-icons/hi'
 import { type SubmitHandler, useForm } from 'react-hook-form'
 import { SectionTitle } from '@/components/section-title'
 import { Button } from '@/components/ui/button'
-import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-import axios from 'axios'
 import { toast } from 'sonner'
 import { motion } from 'framer-motion'
 import { fadeUpAnimation } from '@/lib/animations'
-
-const formSchema = z.object({
-  name: z.string().min(3).max(100),
-  email: z.string().min(1).email(),
-  message: z.string().min(1).max(500),
-})
-
-type ContactFields = z.infer<typeof formSchema>
+import { type ContactFields, formSchema } from '@/lib/validations/form-contact'
+import { postMessage } from '@/actions/contact'
 
 export function ContactSection() {
   const {
@@ -38,11 +30,11 @@ export function ContactSection() {
 
   const onSubmit: SubmitHandler<ContactFields> = async (formData) => {
     try {
-      const { data } = await axios.post('/api/contact', formData)
+      const { message } = await postMessage(formData)
       reset()
-      toast.success(data.message)
+      toast.success(message)
     } catch {
-      toast.success('Ocorreu um erro ao enviar a mensagem. Tente novamente mais tarde')
+      toast.error('Ocorreu um erro ao enviar a mensagem. Tente novamente mais tarde')
     }
   }
 

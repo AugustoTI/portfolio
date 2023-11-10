@@ -1,12 +1,11 @@
 'use client'
 
-import { HighlightProject as PartialProjectData } from '@/lib/sanity/queries/home'
-import { urlFor } from '@/lib/utils'
+import { type HighlightProject as PartialProject } from '@/types/hygraph/page-info'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { fadeUpAnimation } from '@/lib/animations'
 
-export function ProjectCard(props: PartialProjectData) {
+export function ProjectCard(props: PartialProject) {
   const technologies = props.technologies.map((technology) => technology.name).join(', ')
 
   return (
@@ -16,7 +15,7 @@ export function ProjectCard(props: PartialProjectData) {
     >
       <div className=" h-48 w-full overflow-hidden">
         <Image
-          src={urlFor(props.thumbnail).width(380).height(200).url()}
+          src={props.thumbnail.url}
           width={380}
           height={200}
           alt="Thumbnail do projeto"
@@ -26,7 +25,7 @@ export function ProjectCard(props: PartialProjectData) {
       </div>
       <div className="flex flex-1 flex-col p-8">
         <strong className="font-medium text-gray-50/90 transition group-hover:text-emerald-500">
-          {props.name}
+          {props.title}
         </strong>
         <p className="mt-2 line-clamp-4 text-gray-400">{props.short_description}</p>
         <span className="mt-auto block truncate text-sm font-medium text-gray-300">

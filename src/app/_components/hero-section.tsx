@@ -4,28 +4,14 @@ import Image from 'next/image'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { HiArrowNarrowRight } from 'react-icons/hi'
-import { PortableText, type PortableTextReactComponents } from '@portabletext/react'
 import Link from 'next/link'
-import { type DataHomePageProps } from '@/lib/sanity/queries/home'
-import { urlFor } from '@/lib/utils'
 import { motion } from 'framer-motion'
 import { badgeAnimation } from '@/lib/animations'
+import { type Page as PageData } from '@/types/hygraph/page-info'
+import { RichText } from '@/components/rich-text'
 
 interface HeroSectionProps {
-  data: DataHomePageProps
-}
-
-const myPortableTextComponents: Partial<PortableTextReactComponents> = {
-  block: {
-    normal({ children }) {
-      return <p className="my-6 text-sm text-gray-400 sm:text-base">{children}</p>
-    },
-  },
-  marks: {
-    strong({ children }) {
-      return <strong className="font-medium text-gray-50">{children}</strong>
-    },
-  },
+  data: PageData
 }
 
 export function HeroSection({ data }: HeroSectionProps) {
@@ -41,10 +27,10 @@ export function HeroSection({ data }: HeroSectionProps) {
         >
           <p className="font-mono text-emerald-400">Olá, meu nome é</p>
           <h1 className="mt-2 text-4xl font-medium">Augusto César</h1>
-          <PortableText value={data.introduction} components={myPortableTextComponents} />
+          <RichText content={data.introduction.raw} />
           <ul className="flex flex-wrap gap-x-2 gap-y-3 lg:max-w-[340px]">
             {data.intro_technologies.map((technology, index) => (
-              <Badge key={technology._id} asChild>
+              <Badge key={technology.id} asChild>
                 <motion.li
                   {...badgeAnimation}
                   transition={{ duration: 0.2, delay: index * 0.1 }}
@@ -64,7 +50,7 @@ export function HeroSection({ data }: HeroSectionProps) {
 
             <ul className="flex h-20 items-center gap-3 text-2xl text-gray-600">
               {data.social_medias.map((social_media) => (
-                <li key={social_media._id}>
+                <li key={social_media.id}>
                   <a
                     className="transition-colors hover:text-gray-100"
                     href={social_media.url}
@@ -94,7 +80,7 @@ export function HeroSection({ data }: HeroSectionProps) {
             width={420}
             height={404}
             priority
-            src={urlFor(data.profile_picture).width(420).height(404).url()}
+            src={data.profile_picture.url}
             alt="Foto de perfil do Augusto César"
             className="mb-6 h-[300px] w-[300px] rounded-lg object-cover shadow-2xl lg:mb-0 lg:h-[404px] lg:w-[420px]"
             quality={85}
